@@ -1,0 +1,228 @@
+/* ============================================================
+   WAVESEED GROWTH — Global Design System
+   Fonts: Plus Jakarta Sans (UI) + Instrument Serif (Display)
+   ============================================================ */
+
+/* ─── TOKENS ─── */
+:root {
+  /* Brand */
+  --teal-50: #effefb;
+  --teal-100: #c8fff4;
+  --teal-200: #93ffe9;
+  --teal-300: #4dfad9;
+  --teal-400: #18e9c3;
+  --teal-500: #00cca8;
+  --teal-600: #00a387;
+  --teal-700: #008270;
+  --teal-800: #03675c;
+  --teal-900: #07554b;
+
+  --amber-400: #fbbf24;
+  --amber-500: #f59e0b;
+  --amber-600: #d97706;
+
+  /* Neutrals */
+  --white: #ffffff;
+  --gray-25: #fcfcfc;
+  --gray-50: #f9f9f9;
+  --gray-100: #f2f2f2;
+  --gray-150: #eaeaea;
+  --gray-200: #e0e0e0;
+  --gray-300: #c4c4c4;
+  --gray-400: #a3a3a3;
+  --gray-500: #737373;
+  --gray-600: #525252;
+  --gray-700: #404040;
+  --gray-800: #262626;
+  --gray-900: #111111;
+  --black: #0a0a0a;
+
+  /* Typography */
+  --font-ui: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-display: 'Instrument Serif', Georgia, serif;
+
+  /* Spacing scale */
+  --space-1: 4px;   --space-2: 8px;   --space-3: 12px;
+  --space-4: 16px;  --space-5: 20px;  --space-6: 24px;
+  --space-8: 32px;  --space-10: 40px; --space-12: 48px;
+  --space-16: 64px; --space-20: 80px; --space-24: 96px;
+  --space-32: 128px;
+
+  /* Radius */
+  --r-sm: 6px; --r-md: 10px; --r-lg: 16px;
+  --r-xl: 24px; --r-2xl: 32px; --r-full: 9999px;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgba(0,0,0,.05);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,.06), 0 2px 4px rgba(0,0,0,.04);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,.08), 0 4px 8px rgba(0,0,0,.04);
+  --shadow-xl: 0 20px 50px rgba(0,0,0,.1);
+  --shadow-teal: 0 6px 20px rgba(0,163,135,.25);
+
+  /* Transition */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --t-fast: 150ms var(--ease);
+  --t-base: 250ms var(--ease);
+  --t-slow: 400ms var(--ease);
+
+  /* Layout */
+  --nav-h: 68px;
+  --max-w: 1180px;
+  --max-w-sm: 760px;
+}
+
+/* ─── RESET ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-ui);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--gray-800);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+img, video, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; background: none; font: inherit; }
+ul, ol { list-style: none; }
+input, select, textarea { font: inherit; }
+
+/* ─── LAYOUT UTILS ─── */
+.container {
+  width: 100%;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+.section { padding: var(--space-32) 0; }
+.section-sm { padding: var(--space-20) 0; }
+
+/* ─── TYPOGRAPHY ─── */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--teal-700);
+  margin-bottom: var(--space-5);
+}
+.eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 20px; height: 2px;
+  background: var(--teal-500);
+  border-radius: 2px;
+}
+
+/* ─── BUTTONS ─── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 26px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .01em;
+  border-radius: var(--r-md);
+  transition: var(--t-base);
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary {
+  background: var(--black);
+  color: var(--white);
+}
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--teal-700);
+  transform: translateX(-101%);
+  transition: transform 0.35s var(--ease);
+}
+.btn-primary:hover::after { transform: translateX(0); }
+.btn-primary span { position: relative; z-index: 1; }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+
+.btn-outline {
+  background: transparent;
+  color: var(--gray-800);
+  border: 1.5px solid var(--gray-200);
+}
+.btn-outline:hover {
+  border-color: var(--black);
+  color: var(--black);
+  transform: translateY(-2px);
+}
+.btn-teal {
+  background: var(--teal-700);
+  color: var(--white);
+  box-shadow: var(--shadow-teal);
+}
+.btn-teal:hover {
+  background: var(--teal-800);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0,163,135,.35);
+}
+.btn-lg { padding: 16px 32px; font-size: 15px; }
+.btn-full { width: 100%; }
+
+/* ─── REVEAL ANIMATION ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+}
+.reveal.in-view { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 100ms; }
+.reveal-delay-2 { transition-delay: 200ms; }
+.reveal-delay-3 { transition-delay: 300ms; }
+.reveal-delay-4 { transition-delay: 400ms; }
+
+/* ─── FORM ELEMENTS ─── */
+.field-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+  margin-bottom: 6px;
+}
+.field-input {
+  width: 100%;
+  padding: 13px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray-900);
+  background: var(--white);
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--r-md);
+  outline: none;
+  transition: var(--t-base);
+}
+.field-input::placeholder { color: var(--gray-300); font-weight: 400; }
+.field-input:focus {
+  border-color: var(--teal-600);
+  box-shadow: 0 0 0 3px rgba(0,163,135,.1);
+}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--gray-50); }
+::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gray-300); }
+
+/* ─── SELECTION ─── */
+::selection { background: var(--teal-100); color: var(--teal-900); }
