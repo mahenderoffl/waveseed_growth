@@ -18,6 +18,7 @@ export default async function handler(req, res) {
             OR: [
               { name: { contains: q, mode: 'insensitive' } },
               { email: { contains: q, mode: 'insensitive' } },
+              { phone: { contains: q, mode: 'insensitive' } },
               { company: { contains: q, mode: 'insensitive' } },
             ],
           }

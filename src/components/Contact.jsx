@@ -89,9 +89,15 @@ export default function Contact() {
                     <input className="field-input" id="ce" name="email" type="email" placeholder="jane@company.com" required />
                   </div>
                 </div>
-                <div>
-                  <label className="field-label" htmlFor="cc">Company</label>
-                  <input className="field-input" id="cc" name="company" placeholder="Acme Inc." />
+                <div className={styles.row}>
+                  <div>
+                    <label className="field-label" htmlFor="cp">Phone Number</label>
+                    <input className="field-input" id="cp" name="phone" type="tel" placeholder="+1 (555) 123-4567" required />
+                  </div>
+                  <div>
+                    <label className="field-label" htmlFor="cc">Company</label>
+                    <input className="field-input" id="cc" name="company" placeholder="Acme Inc." />
+                  </div>
                 </div>
                 <div>
                   <label className="field-label" htmlFor="cs">I need help with…</label>
