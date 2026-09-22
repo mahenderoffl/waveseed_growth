@@ -43,6 +43,17 @@ it directly:
 vercel env pull .env
 ```
 
+**On Vercel itself, you don't need to set `DATABASE_URL` at all** if you
+connected the database via the Storage tab — Vercel auto-injects
+project-prefixed variables (e.g. `<project>_POSTGRES_URL`,
+`<project>_DATABASE_URL`, `<project>_PRISMA_DATABASE_URL`). `lib/dbUrl.js`
+falls back to `<project>_POSTGRES_URL` / `<project>_DATABASE_URL`
+automatically (never `..._PRISMA_DATABASE_URL` — that one's a
+`prisma+postgres://` Accelerate proxy URL, not a plain Postgres connection,
+and isn't compatible with the driver adapter this project uses). If your
+project isn't named `WaveSeed_Growth`, update the variable names in
+`lib/dbUrl.js` to match yours.
+
 ### 3. Create the database schema
 
 ```bash
