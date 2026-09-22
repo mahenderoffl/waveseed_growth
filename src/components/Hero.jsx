@@ -71,15 +71,14 @@ export default function Hero() {
 
         {/* Headline */}
         <h1 className={`${styles.h1} reveal reveal-delay-1`}>
-          <span className={styles.lead}>We Turn Ambition Into</span>
-          <span className={`${styles.payoffWrap} ${phase === 'enter' ? styles.payoffWrapFlash : ''}`}>
-            <span
-              key={index}
-              className={`${styles.payoff} ${phase === 'exit' ? styles.payoffExit : styles.payoffEnter}`}
-            >
-              {payoff}
-            </span>
-          </span>
+          We Turn Ambition<br />
+          Into{' '}
+          <em
+            key={index}
+            className={`${styles.serif} ${phase === 'exit' ? styles.payoffExit : styles.payoffEnter}`}
+          >
+            {payoff}
+          </em>
         </h1>
 
         {/* Sub */}
