@@ -1,42 +1,12 @@
-.page {
-  min-height: 100vh;
-  background: var(--gray-50);
-}
-
-.header {
-  background: var(--white);
-  border-bottom: 1px solid var(--gray-150);
-  padding: var(--space-5) var(--space-6);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-4);
-  flex-wrap: wrap;
-}
-
-.title {
-  font-family: var(--font-ui);
-  font-size: 20px;
-  font-weight: 800;
-  letter-spacing: -.02em;
-  color: var(--gray-900);
-}
-
-.headerActions {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-}
-
-.logoutBtn {
-  padding: 10px 18px;
+.errorBanner {
   font-size: 13px;
-}
-
-.main {
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: var(--space-8) var(--space-6);
+  font-weight: 600;
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: var(--r-md);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-6);
 }
 
 .toolbar {
@@ -118,14 +88,6 @@
 .table tr:last-child td { border-bottom: none; }
 .table tr:hover td { background: var(--gray-25); }
 
-.nameCell { font-weight: 700; color: var(--gray-900); }
-.emailCell { color: var(--teal-700); }
-.phoneCell { color: var(--teal-700); white-space: nowrap; }
-.messageCell {
-  max-width: 320px;
-  color: var(--gray-600);
-}
-
 .badge {
   display: inline-block;
   padding: 3px 10px;
@@ -137,22 +99,24 @@
   white-space: nowrap;
 }
 
-.dateCell {
-  color: var(--gray-500);
+.rowActions {
+  display: flex;
+  gap: var(--space-2);
   white-space: nowrap;
-  font-size: 13px;
 }
 
-.deleteBtn {
+.editBtn, .deleteBtn {
   font-size: 12px;
   font-weight: 700;
-  color: #b91c1c;
   padding: 6px 10px;
   border-radius: var(--r-sm);
   transition: var(--t-fast);
 }
+.editBtn { color: var(--teal-700); }
+.editBtn:hover { background: var(--teal-50); }
+.deleteBtn { color: #b91c1c; }
 .deleteBtn:hover { background: #fef2f2; }
-.deleteBtn:disabled { opacity: .5; cursor: default; }
+.editBtn:disabled, .deleteBtn:disabled { opacity: .5; cursor: default; }
 
 .emptyState, .loadingState {
   padding: var(--space-24) var(--space-6);
@@ -160,13 +124,49 @@
   color: var(--gray-500);
 }
 
-.errorBanner {
-  font-size: 13px;
-  font-weight: 600;
-  color: #b91c1c;
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  border-radius: var(--r-md);
-  padding: var(--space-3) var(--space-4);
+/* ── Add/Edit form card ── */
+.formCard {
+  background: var(--white);
+  border: 1px solid var(--gray-150);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-6);
   margin-bottom: var(--space-6);
+}
+
+.formTitle {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--gray-900);
+  margin-bottom: var(--space-5);
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+.formGrid.full { grid-template-columns: 1fr; }
+
+.formRow { display: flex; flex-direction: column; gap: 6px; }
+
+.formActions {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray-700);
+}
+.checkboxRow input { width: 16px; height: 16px; }
+
+@media (max-width: 640px) {
+  .formGrid { grid-template-columns: 1fr; }
 }

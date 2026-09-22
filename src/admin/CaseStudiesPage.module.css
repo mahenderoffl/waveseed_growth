@@ -1,0 +1,18 @@
+.clientCell { font-weight: 700; color: var(--gray-900); }
+.headlineCell { max-width: 320px; color: var(--gray-600); }
+
+.metricsRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+.metricPair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+@media (max-width: 640px) {
+  .metricsRow { grid-template-columns: 1fr; }
+}

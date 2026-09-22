@@ -1,7 +1,8 @@
+import { useEffect, useState } from 'react'
 import { useInView } from '../hooks/useInView'
 import styles from './CaseStudies.module.css'
 
-const cases = [
+const fallbackCases = [
   {
     tag: 'SEO + Content',
     client: 'Nexora SaaS',
@@ -77,6 +78,17 @@ function CaseCard({ c, delay }) {
 
 export default function CaseStudies() {
   const [ref, inView] = useInView()
+  const [cases, setCases] = useState(fallbackCases)
+
+  useEffect(() => {
+    fetch('/api/case-studies')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data?.caseStudies?.length) setCases(data.caseStudies)
+      })
+      .catch(() => {}) // keep the fallback content on any failure
+  }, [])
+
   return (
     <section className={`${styles.section} section`} id="work"
              style={{ background: 'var(--gray-50)' }}>
@@ -92,7 +104,7 @@ export default function CaseStudies() {
           </p>
         </div>
         <div className={styles.grid}>
-          {cases.map((c, i) => <CaseCard key={i} c={c} delay={i * 100} />)}
+          {cases.map((c, i) => <CaseCard key={c.id ?? i} c={c} delay={i * 100} />)}
         </div>
       </div>
     </section>
