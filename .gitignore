@@ -32,3 +32,8 @@ dist-ssr
 /.windsurf
 /.claude/skills
 /skills-lock.json
+
+# Playwright
+/test-results
+/playwright-report
+/blob-report
