@@ -1,5 +1,25 @@
+import { useEffect, useState } from 'react'
 import { useInView, useCounter } from '../hooks/useInView'
 import styles from './Hero.module.css'
+
+const PAYOFFS = ['Market Dominance', 'Unstoppable Growth', 'Unfair Advantage']
+
+function useRotatingPayoff(words, { hold = 2600, exit = 320, enter = 700 } = {}) {
+  const [index, setIndex] = useState(0)
+  const [phase, setPhase] = useState('hold') // 'hold' | 'exit' | 'enter'
+
+  useEffect(() => {
+    const ms = phase === 'hold' ? hold : phase === 'exit' ? exit : enter
+    const t = setTimeout(() => {
+      if (phase === 'hold') setPhase('exit')
+      else if (phase === 'exit') { setIndex(i => (i + 1) % words.length); setPhase('enter') }
+      else setPhase('hold')
+    }, ms)
+    return () => clearTimeout(t)
+  }, [phase, hold, exit, enter, words.length])
+
+  return { word: words[index], index, phase }
+}
 
 const stats = [
   { prefix: '',  num: 240, suffix: '+', label: 'Clients grown' },
@@ -24,6 +44,7 @@ function StatItem({ prefix, num, suffix, label, trigger }) {
 
 export default function Hero() {
   const [ref, inView] = useInView()
+  const { word: payoff, index, phase } = useRotatingPayoff(PAYOFFS)
 
   const handleClick = (href) => (e) => {
     e.preventDefault()
@@ -50,9 +71,15 @@ export default function Hero() {
 
         {/* Headline */}
         <h1 className={`${styles.h1} reveal reveal-delay-1`}>
-          We Turn Ambition<br />
-          Into{' '}
-          <em className={styles.serif}>Market Dominance</em>
+          <span className={styles.lead}>We Turn Ambition Into</span>
+          <span className={`${styles.payoffWrap} ${phase === 'enter' ? styles.payoffWrapFlash : ''}`}>
+            <span
+              key={index}
+              className={`${styles.payoff} ${phase === 'exit' ? styles.payoffExit : styles.payoffEnter}`}
+            >
+              {payoff}
+            </span>
+          </span>
         </h1>
 
         {/* Sub */}
