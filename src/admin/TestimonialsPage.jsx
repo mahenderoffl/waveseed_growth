@@ -4,7 +4,7 @@ import AdminLayout from './AdminLayout'
 import shared from './AdminShared.module.css'
 import styles from './TestimonialsPage.module.css'
 
-const BLANK = { quote: '', name: '', role: '', initials: '', color: '#00a387', rating: 5, order: 0 }
+const BLANK = { name: '', description: '', url: '', initials: '', color: '#00a387', order: 0 }
 
 export default function TestimonialsPage() {
   const [items, setItems] = useState([])
@@ -67,7 +67,7 @@ export default function TestimonialsPage() {
       title="Testimonials"
       actions={
         editingId === null && (
-          <button className="btn btn-teal" onClick={startNew}>Add Testimonial</button>
+          <button className="btn btn-teal" onClick={startNew}>Add Project</button>
         )
       }
     >
@@ -75,21 +75,22 @@ export default function TestimonialsPage() {
 
       {editingId !== null && (
         <div className={shared.formCard}>
-          <h2 className={shared.formTitle}>{editingId === 'new' ? 'New Testimonial' : 'Edit Testimonial'}</h2>
+          <h2 className={shared.formTitle}>{editingId === 'new' ? 'New Project' : 'Edit Project'}</h2>
           <form onSubmit={handleSubmit}>
             <div className={`${shared.formGrid} ${shared.full}`}>
               <div className={shared.formRow}>
-                <label className="field-label" htmlFor="quote">Quote</label>
+                <label className="field-label" htmlFor="description">Description</label>
                 <textarea
-                  className="field-input" id="quote" rows={3} required
-                  value={form.quote}
-                  onChange={(e) => setForm((f) => ({ ...f, quote: e.target.value }))}
+                  className="field-input" id="description" rows={3} required
+                  placeholder="One honest line about the project — no invented results."
+                  value={form.description}
+                  onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
                 />
               </div>
             </div>
             <div className={shared.formGrid}>
               <div className={shared.formRow}>
-                <label className="field-label" htmlFor="name">Name</label>
+                <label className="field-label" htmlFor="name">Project / Client Name</label>
                 <input
                   className="field-input" id="name" required
                   value={form.name}
@@ -97,15 +98,15 @@ export default function TestimonialsPage() {
                 />
               </div>
               <div className={shared.formRow}>
-                <label className="field-label" htmlFor="role">Role / Company</label>
+                <label className="field-label" htmlFor="url">Live Site URL</label>
                 <input
-                  className="field-input" id="role" required
-                  value={form.role}
-                  onChange={(e) => setForm((f) => ({ ...f, role: e.target.value }))}
+                  className="field-input" id="url" type="url" required placeholder="https://example.com"
+                  value={form.url}
+                  onChange={(e) => setForm((f) => ({ ...f, url: e.target.value }))}
                 />
               </div>
               <div className={shared.formRow}>
-                <label className="field-label" htmlFor="initials">Avatar Initials</label>
+                <label className="field-label" htmlFor="initials">Badge Initials</label>
                 <input
                   className="field-input" id="initials" required maxLength={3}
                   value={form.initials}
@@ -113,7 +114,7 @@ export default function TestimonialsPage() {
                 />
               </div>
               <div className={shared.formRow}>
-                <label className="field-label" htmlFor="color">Avatar Color</label>
+                <label className="field-label" htmlFor="color">Badge Color</label>
                 <div className={styles.colorInput}>
                   <input
                     className={styles.colorSwatch} id="color" type="color"
@@ -126,14 +127,6 @@ export default function TestimonialsPage() {
                     onChange={(e) => setForm((f) => ({ ...f, color: e.target.value }))}
                   />
                 </div>
-              </div>
-              <div className={shared.formRow}>
-                <label className="field-label" htmlFor="rating">Rating (1–5)</label>
-                <input
-                  className="field-input" id="rating" type="number" min={1} max={5}
-                  value={form.rating}
-                  onChange={(e) => setForm((f) => ({ ...f, rating: e.target.value }))}
-                />
               </div>
               <div className={shared.formRow}>
                 <label className="field-label" htmlFor="order">Display Order</label>
@@ -158,16 +151,16 @@ export default function TestimonialsPage() {
 
       <div className={shared.tableWrap}>
         {loading ? (
-          <p className={shared.loadingState}>Loading testimonials…</p>
+          <p className={shared.loadingState}>Loading projects…</p>
         ) : items.length === 0 ? (
-          <p className={shared.emptyState}>No testimonials yet. The site is showing its built-in defaults until you add some here.</p>
+          <p className={shared.emptyState}>No projects yet. The site is showing its built-in defaults until you add some here.</p>
         ) : (
           <table className={shared.table}>
             <thead>
               <tr>
-                <th>Author</th>
-                <th>Quote</th>
-                <th>Rating</th>
+                <th>Project</th>
+                <th>Description</th>
+                <th>URL</th>
                 <th>Order</th>
                 <th></th>
               </tr>
@@ -178,14 +171,11 @@ export default function TestimonialsPage() {
                   <td>
                     <div className={styles.avatarCell}>
                       <div className={styles.avatar} style={{ background: t.color }}>{t.initials}</div>
-                      <div>
-                        <div style={{ fontWeight: 700, color: 'var(--gray-900)' }}>{t.name}</div>
-                        <div style={{ fontSize: 12, color: 'var(--gray-500)' }}>{t.role}</div>
-                      </div>
+                      <div style={{ fontWeight: 700, color: 'var(--gray-900)' }}>{t.name}</div>
                     </div>
                   </td>
-                  <td className={styles.quoteCell}>{t.quote}</td>
-                  <td>{'★'.repeat(t.rating)}</td>
+                  <td className={styles.quoteCell}>{t.description}</td>
+                  <td><a href={t.url} target="_blank" rel="noopener noreferrer">{t.url}</a></td>
                   <td>{t.order}</td>
                   <td>
                     <div className={shared.rowActions}>

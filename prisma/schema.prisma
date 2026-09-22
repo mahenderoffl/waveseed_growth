@@ -31,17 +31,18 @@ model SiteSetting {
   updatedAt    DateTime @updatedAt
 }
 
+// Real projects we've built, shown as simple name/description/link cards —
+// no fabricated client quotes or ratings.
 model Testimonial {
-  id        String   @id @default(cuid())
-  quote     String
-  name      String
-  role      String
-  initials  String
-  color     String   @default("#00a387")
-  rating    Int      @default(5)
-  order     Int      @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  url         String
+  initials    String
+  color       String   @default("#00a387")
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model CaseStudy {
@@ -50,7 +51,8 @@ model CaseStudy {
   client       String
   headline     String
   desc         String
-  metrics      Json // [{ num, label }, ...]
+  url          String // live site, for the "visit" link and preview embed
+  metrics      Json? // optional [{ num, label }, ...] — only real, verifiable stats
   featured     Boolean  @default(false)
   accentBg     String?
   accentBorder String?
