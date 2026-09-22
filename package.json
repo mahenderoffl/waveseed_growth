@@ -11,7 +11,7 @@
     "postinstall": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
-    "vercel-build": "prisma migrate deploy && vite build"
+    "vercel-build": "PRISMA_SCHEMA_DISABLE_ADVISORY_LOCK=1 prisma migrate deploy && vite build"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.10.0",
