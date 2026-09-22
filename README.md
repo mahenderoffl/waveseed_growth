@@ -121,7 +121,7 @@ ADMIN_JWT_SECRET="$(openssl rand -hex 32)"
 ### Using it
 
 - Visit `/admin/login`, sign in, and you'll land on `/admin` with a
-  searchable, sortable table of leads.
+  searchable table of leads.
 - Sessions last 7 days (an httpOnly cookie) or until you click **Log Out**.
 - The route isn't linked from the site's nav — treat the URL as
   semi-private, and rotate `ADMIN_PASSWORD`/`ADMIN_JWT_SECRET` if you
@@ -129,3 +129,22 @@ ADMIN_JWT_SECRET="$(openssl rand -hex 32)"
 - Like the contact form's `/api` route, this needs `npx vercel dev` (not
   `npm run dev`) to test locally, since it's backed by serverless
   functions.
+
+### Sections
+
+- **Leads** (`/admin`) — search, filter by status (New / Contacted /
+  Qualified / Converted — click a lead's status badge to change it),
+  export the current view as CSV, or delete a lead.
+- **Testimonials** (`/admin/testimonials`) — add/edit/delete the
+  testimonials shown on the site.
+- **Case Studies** (`/admin/case-studies`) — add/edit/delete the case
+  study cards, including their metrics and featured-card accent colors.
+- **Settings** (`/admin/settings`) — edit the contact email/phone shown
+  in the Contact section.
+
+For Testimonials, Case Studies, and Settings: the site's original
+hardcoded content is a fallback, not a seed. It keeps showing until you
+add at least one entry (Testimonials/Case Studies) or save a change
+(Settings) — after that, whatever's in the database is what the public
+site renders. If the database is empty or briefly unreachable, the
+public site falls back to that hardcoded content rather than breaking.

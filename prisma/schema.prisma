@@ -19,5 +19,42 @@ model ContactSubmission {
   company   String?
   service   String?
   message   String?
+  status    String   @default("NEW") // NEW | CONTACTED | QUALIFIED | CONVERTED
   createdAt DateTime @default(now())
+}
+
+// Singleton row (id is always 1) holding editable site-wide values.
+model SiteSetting {
+  id           Int      @id @default(1)
+  contactEmail String   @default("support@waveseed.co")
+  contactPhone String   @default("+91 93916 76809")
+  updatedAt    DateTime @updatedAt
+}
+
+model Testimonial {
+  id        String   @id @default(cuid())
+  quote     String
+  name      String
+  role      String
+  initials  String
+  color     String   @default("#00a387")
+  rating    Int      @default(5)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CaseStudy {
+  id           String   @id @default(cuid())
+  tag          String
+  client       String
+  headline     String
+  desc         String
+  metrics      Json // [{ num, label }, ...]
+  featured     Boolean  @default(false)
+  accentBg     String?
+  accentBorder String?
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }

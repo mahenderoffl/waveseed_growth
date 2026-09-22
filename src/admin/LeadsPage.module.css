@@ -1,0 +1,45 @@
+.nameCell { font-weight: 700; color: var(--gray-900); }
+.emailCell { color: var(--teal-700); }
+.phoneCell { color: var(--teal-700); white-space: nowrap; }
+.messageCell {
+  max-width: 280px;
+  color: var(--gray-600);
+}
+
+.dateCell {
+  color: var(--gray-500);
+  white-space: nowrap;
+  font-size: 13px;
+}
+
+.statusSelect {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: var(--r-full);
+  border: 1.5px solid var(--gray-200);
+  background: var(--white);
+  color: var(--gray-700);
+  cursor: pointer;
+}
+.statusNew { border-color: var(--teal-200); color: var(--teal-800); background: var(--teal-50); }
+.statusContacted { border-color: #bfdbfe; color: #1d4ed8; background: #eff6ff; }
+.statusQualified { border-color: #fde68a; color: #92400e; background: #fffbeb; }
+.statusConverted { border-color: #bbf7d0; color: #166534; background: #f0fdf4; }
+
+.filterSelect {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 9px 12px;
+  border-radius: var(--r-md);
+  border: 1.5px solid var(--gray-200);
+  background: var(--white);
+  color: var(--gray-700);
+}
+
+.toolbarRight {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}

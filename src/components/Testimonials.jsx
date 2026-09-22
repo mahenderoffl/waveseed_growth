@@ -1,7 +1,8 @@
+import { useEffect, useState } from 'react'
 import { useInView } from '../hooks/useInView'
 import styles from './Testimonials.module.css'
 
-const testis = [
+const fallbackTestis = [
   {
     quote: `"WaveSeed didn't just run our SEO — they rebuilt our entire content architecture. Organic pipeline went from $200K to $2.4M in one year. The ROI is insane."`,
     name: 'James K.',
@@ -33,7 +34,7 @@ function TestiCard({ t, delay }) {
       className={`${styles.card} reveal ${inView ? 'in-view' : ''}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
-      <div className={styles.stars}>★★★★★</div>
+      <div className={styles.stars}>{'★'.repeat(t.rating ?? 5)}</div>
       <blockquote className={styles.quote}>{t.quote}</blockquote>
       <div className={styles.author}>
         <div className={styles.avatar} style={{ background: t.color }}>{t.initials}</div>
@@ -48,6 +49,17 @@ function TestiCard({ t, delay }) {
 
 export default function Testimonials() {
   const [ref, inView] = useInView()
+  const [testis, setTestis] = useState(fallbackTestis)
+
+  useEffect(() => {
+    fetch('/api/testimonials')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data?.testimonials?.length) setTestis(data.testimonials)
+      })
+      .catch(() => {}) // keep the fallback content on any failure
+  }, [])
+
   return (
     <section className={`${styles.section} section`} id="testimonials">
       <div className="container">
@@ -60,7 +72,7 @@ export default function Testimonials() {
         </div>
         <div className={styles.grid}>
           {testis.map((t, i) => (
-            <TestiCard key={i} t={t} delay={i * 100} />
+            <TestiCard key={t.id ?? i} t={t} delay={i * 100} />
           ))}
         </div>
       </div>

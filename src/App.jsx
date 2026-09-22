@@ -1,7 +1,10 @@
 import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import AdminLogin from './admin/AdminLogin'
-import AdminDashboard from './admin/AdminDashboard'
+import LeadsPage from './admin/LeadsPage'
+import TestimonialsPage from './admin/TestimonialsPage'
+import CaseStudiesPage from './admin/CaseStudiesPage'
+import SettingsPage from './admin/SettingsPage'
 import RequireAdmin from './admin/RequireAdmin'
 
 export default function App() {
@@ -9,14 +12,10 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/admin/login" element={<AdminLogin />} />
-      <Route
-        path="/admin"
-        element={
-          <RequireAdmin>
-            <AdminDashboard />
-          </RequireAdmin>
-        }
-      />
+      <Route path="/admin" element={<RequireAdmin><LeadsPage /></RequireAdmin>} />
+      <Route path="/admin/testimonials" element={<RequireAdmin><TestimonialsPage /></RequireAdmin>} />
+      <Route path="/admin/case-studies" element={<RequireAdmin><CaseStudiesPage /></RequireAdmin>} />
+      <Route path="/admin/settings" element={<RequireAdmin><SettingsPage /></RequireAdmin>} />
     </Routes>
   )
 }

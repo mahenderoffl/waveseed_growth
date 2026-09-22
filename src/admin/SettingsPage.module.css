@@ -1,0 +1,24 @@
+.card {
+  background: var(--white);
+  border: 1px solid var(--gray-150);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-8);
+  max-width: 480px;
+}
+
+.field {
+  margin-bottom: var(--space-5);
+}
+
+.successNote {
+  font-size: 13px;
+  font-weight: 600;
+  color: #166534;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: var(--r-md);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-6);
+  max-width: 480px;
+}
