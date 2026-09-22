@@ -1,0 +1,74 @@
+.wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gray-50);
+  padding: var(--space-6);
+}
+
+.card {
+  width: 100%;
+  max-width: 380px;
+  background: var(--white);
+  border: 1px solid var(--gray-150);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-10) var(--space-8);
+}
+
+.title {
+  font-family: var(--font-ui);
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  color: var(--gray-900);
+  margin-bottom: var(--space-2);
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--gray-500);
+  margin-bottom: var(--space-8);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.passwordField {
+  position: relative;
+}
+
+.passwordField :global(.field-input) {
+  padding-right: 44px;
+}
+
+.toggleBtn {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--r-sm);
+  color: var(--gray-400);
+  transition: var(--t-fast);
+}
+.toggleBtn:hover { color: var(--gray-700); background: var(--gray-100); }
+.toggleBtn:focus-visible { outline: 2px solid var(--teal-500); outline-offset: 1px; }
+
+.error {
+  font-size: 13px;
+  font-weight: 600;
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: var(--r-md);
+  padding: var(--space-3) var(--space-4);
+}
