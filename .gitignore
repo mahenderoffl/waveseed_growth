@@ -22,3 +22,13 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Prisma / environment variables
+.env
+.env*.local
+
+# Prisma CLI agent-skill scaffolding (not used by this project)
+/.agents
+/.windsurf
+/.claude/skills
+/skills-lock.json
