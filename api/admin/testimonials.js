@@ -1,15 +1,13 @@
-import { prisma } from '../../../lib/prisma.js'
-import { requireAdmin } from '../../../lib/adminAuth.js'
+import { prisma } from '../../lib/prisma.js'
+import { requireAdmin } from '../../lib/adminAuth.js'
 
-// Combines list/create (GET/POST) and single-item update/delete (PUT/DELETE)
-// into one function via an optional catch-all segment — Vercel's Hobby plan
-// caps a deployment at 12 Serverless Functions. /api/admin/testimonials and
-// /api/admin/testimonials/:id both route here unchanged.
+// Handles list/create (GET/POST) and single-item update/delete (via ?id=)
+// in one function — see the comment in api/admin/leads.js for why the id
+// is a query param rather than a URL path segment.
 export default async function handler(req, res) {
   if (!requireAdmin(req, res)) return
 
-  const idParam = req.query.id
-  const id = Array.isArray(idParam) ? idParam[0] : idParam
+  const id = typeof req.query.id === 'string' ? req.query.id : undefined
 
   if (!id) {
     if (req.method === 'GET') {

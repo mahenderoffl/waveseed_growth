@@ -41,11 +41,11 @@ export function getLeads(q = '', status = '') {
 }
 
 export function deleteLead(id) {
-  return request(`/api/admin/leads/${encodeURIComponent(id)}`, { method: 'DELETE' })
+  return request(`/api/admin/leads?id=${encodeURIComponent(id)}`, { method: 'DELETE' })
 }
 
 export function updateLeadStatus(id, status) {
-  return request(`/api/admin/leads/${encodeURIComponent(id)}`, {
+  return request(`/api/admin/leads?id=${encodeURIComponent(id)}`, {
     method: 'PATCH',
     body: JSON.stringify({ status }),
   })
@@ -70,11 +70,11 @@ export function createTestimonial(data) {
 }
 
 export function updateTestimonial(id, data) {
-  return request(`/api/admin/testimonials/${encodeURIComponent(id)}`, { method: 'PUT', body: JSON.stringify(data) })
+  return request(`/api/admin/testimonials?id=${encodeURIComponent(id)}`, { method: 'PUT', body: JSON.stringify(data) })
 }
 
 export function deleteTestimonial(id) {
-  return request(`/api/admin/testimonials/${encodeURIComponent(id)}`, { method: 'DELETE' })
+  return request(`/api/admin/testimonials?id=${encodeURIComponent(id)}`, { method: 'DELETE' })
 }
 
 export function getCaseStudies() {
@@ -86,9 +86,9 @@ export function createCaseStudy(data) {
 }
 
 export function updateCaseStudy(id, data) {
-  return request(`/api/admin/case-studies/${encodeURIComponent(id)}`, { method: 'PUT', body: JSON.stringify(data) })
+  return request(`/api/admin/case-studies?id=${encodeURIComponent(id)}`, { method: 'PUT', body: JSON.stringify(data) })
 }
 
 export function deleteCaseStudy(id) {
-  return request(`/api/admin/case-studies/${encodeURIComponent(id)}`, { method: 'DELETE' })
+  return request(`/api/admin/case-studies?id=${encodeURIComponent(id)}`, { method: 'DELETE' })
 }
