@@ -6,11 +6,28 @@ export default function Contact() {
   const [ref, inView] = useInView()
   const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
-    setTimeout(() => { setLoading(false); setSent(true) }, 1400)
+    setError(null)
+
+    const data = Object.fromEntries(new FormData(e.target))
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      })
+      if (!res.ok) throw new Error('Request failed')
+      setSent(true)
+    } catch {
+      setError('Something went wrong. Please try again or email us directly.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -96,6 +113,7 @@ export default function Contact() {
                   disabled={loading}>
                   {loading ? 'Sending…' : 'Book My Strategy Call →'}
                 </button>
+                {error && <p className={styles.formNote} role="alert">{error}</p>}
                 <p className={styles.formNote}>No spam. Audit delivered within 48 hours.</p>
               </form>
             ) : (
