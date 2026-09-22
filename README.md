@@ -9,6 +9,20 @@ npm install
 npm run dev
 ```
 
+## Testing
+
+```bash
+npm test
+```
+
+Runs a production build, then the Playwright suite (`tests/`) against
+`scripts/test-server.mjs` — a small local stand-in for Vercel that serves
+the built site and auto-discovers every `api/*.js` route, so it needs no
+per-endpoint wiring as routes are added or removed. Needs `DATABASE_URL`,
+`ADMIN_PASSWORD`, and `ADMIN_JWT_SECRET` set (see the sections below) —
+CI provisions these against an ephemeral Postgres container on every push
+and PR (`.github/workflows/ci.yml`).
+
 ## Database (Prisma)
 
 The contact form (`src/components/Contact.jsx`) posts to `/api/contact`, a
