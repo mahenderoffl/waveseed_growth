@@ -21,9 +21,9 @@ export default async function handler(req, res) {
     }
 
     if (req.method === 'POST') {
-      const { tag, client, headline, desc, metrics, featured, accentBg, accentBorder, order } = req.body ?? {}
-      if (!tag || !client || !headline || !desc) {
-        return res.status(400).json({ error: 'tag, client, headline, and desc are required' })
+      const { tag, client, headline, desc, url, metrics, featured, accentBg, accentBorder, order } = req.body ?? {}
+      if (!tag || !client || !headline || !desc || !url) {
+        return res.status(400).json({ error: 'tag, client, headline, desc, and url are required' })
       }
       try {
         const caseStudy = await prisma.caseStudy.create({
@@ -32,7 +32,8 @@ export default async function handler(req, res) {
             client,
             headline,
             desc,
-            metrics: Array.isArray(metrics) ? metrics : [],
+            url,
+            metrics: Array.isArray(metrics) && metrics.length ? metrics : undefined,
             featured: Boolean(featured),
             accentBg: accentBg || null,
             accentBorder: accentBorder || null,
@@ -51,9 +52,9 @@ export default async function handler(req, res) {
   }
 
   if (req.method === 'PUT') {
-    const { tag, client, headline, desc, metrics, featured, accentBg, accentBorder, order } = req.body ?? {}
-    if (!tag || !client || !headline || !desc) {
-      return res.status(400).json({ error: 'tag, client, headline, and desc are required' })
+    const { tag, client, headline, desc, url, metrics, featured, accentBg, accentBorder, order } = req.body ?? {}
+    if (!tag || !client || !headline || !desc || !url) {
+      return res.status(400).json({ error: 'tag, client, headline, desc, and url are required' })
     }
     try {
       const caseStudy = await prisma.caseStudy.update({
@@ -63,7 +64,8 @@ export default async function handler(req, res) {
           client,
           headline,
           desc,
-          metrics: Array.isArray(metrics) ? metrics : [],
+          url,
+          metrics: Array.isArray(metrics) && metrics.length ? metrics : null,
           featured: Boolean(featured),
           accentBg: accentBg || null,
           accentBorder: accentBorder || null,

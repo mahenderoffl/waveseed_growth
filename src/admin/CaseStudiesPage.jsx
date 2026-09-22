@@ -6,7 +6,7 @@ import styles from './CaseStudiesPage.module.css'
 
 const BLANK_METRICS = [{ num: '', label: '' }, { num: '', label: '' }, { num: '', label: '' }]
 const BLANK = {
-  tag: '', client: '', headline: '', desc: '',
+  tag: '', client: '', headline: '', desc: '', url: '',
   metrics: BLANK_METRICS, featured: false,
   accentBg: '', accentBorder: '', order: 0,
 }
@@ -117,7 +117,7 @@ export default function CaseStudiesPage() {
               <div className={shared.formRow}>
                 <label className="field-label" htmlFor="headline">Headline</label>
                 <input
-                  className="field-input" id="headline" required placeholder="312% increase in organic traffic in 6 months"
+                  className="field-input" id="headline" required placeholder="A modern web presence for a growing brand"
                   value={form.headline}
                   onChange={(e) => setForm((f) => ({ ...f, headline: e.target.value }))}
                 />
@@ -133,8 +133,18 @@ export default function CaseStudiesPage() {
                 />
               </div>
             </div>
+            <div className={`${shared.formGrid} ${shared.full}`}>
+              <div className={shared.formRow}>
+                <label className="field-label" htmlFor="url">Live Site URL</label>
+                <input
+                  className="field-input" id="url" type="url" required placeholder="https://example.com"
+                  value={form.url}
+                  onChange={(e) => setForm((f) => ({ ...f, url: e.target.value }))}
+                />
+              </div>
+            </div>
 
-            <label className="field-label">Metrics (up to 3)</label>
+            <label className="field-label">Metrics (optional, up to 3 — only real, verifiable numbers)</label>
             <div className={styles.metricsRow}>
               {form.metrics.map((m, i) => (
                 <div key={i} className={styles.metricPair}>
