@@ -21,18 +21,20 @@ export default async function handler(req, res) {
     }
 
     if (req.method === 'POST') {
-      const { name, description, url, initials, color, order } = req.body ?? {}
-      if (!name || !description || !url || !initials) {
-        return res.status(400).json({ error: 'name, description, url, and initials are required' })
+      const { name, role, quote, url, initials, color, approved, order } = req.body ?? {}
+      if (!name || !role || !quote || !url || !initials) {
+        return res.status(400).json({ error: 'name, role, quote, url, and initials are required' })
       }
       try {
         const testimonial = await prisma.testimonial.create({
           data: {
             name,
-            description,
+            role,
+            quote,
             url,
             initials,
             color: color || undefined,
+            approved: Boolean(approved),
             order: order ? Number(order) : undefined,
           },
         })
@@ -48,14 +50,14 @@ export default async function handler(req, res) {
   }
 
   if (req.method === 'PUT') {
-    const { name, description, url, initials, color, order } = req.body ?? {}
-    if (!name || !description || !url || !initials) {
-      return res.status(400).json({ error: 'name, description, url, and initials are required' })
+    const { name, role, quote, url, initials, color, approved, order } = req.body ?? {}
+    if (!name || !role || !quote || !url || !initials) {
+      return res.status(400).json({ error: 'name, role, quote, url, and initials are required' })
     }
     try {
       const testimonial = await prisma.testimonial.update({
         where: { id },
-        data: { name, description, url, initials, color, order: Number(order) },
+        data: { name, role, quote, url, initials, color, approved: Boolean(approved), order: Number(order) },
       })
       return res.status(200).json({ testimonial })
     } catch (err) {

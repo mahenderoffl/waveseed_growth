@@ -31,18 +31,21 @@ model SiteSetting {
   updatedAt    DateTime @updatedAt
 }
 
-// Real projects we've built, shown as simple name/description/link cards —
-// no fabricated client quotes or ratings.
+// Real quotes from real clients — never shown publicly until `approved`
+// is flipped on in the admin panel, so a drafted-but-unconfirmed quote
+// can never leak onto the live site by accident.
 model Testimonial {
-  id          String   @id @default(cuid())
-  name        String
-  description String
-  url         String
-  initials    String
-  color       String   @default("#00a387")
-  order       Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        String   @id @default(cuid())
+  name      String // person's name, e.g. "Raju Kusa"
+  role      String // e.g. "Founder, Sai Manju Driving School"
+  quote     String
+  url       String // their site, for a "visit" link
+  initials  String
+  color     String   @default("#00a387")
+  approved  Boolean  @default(false)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model CaseStudy {
