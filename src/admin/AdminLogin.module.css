@@ -38,6 +38,31 @@
   gap: var(--space-5);
 }
 
+.passwordField {
+  position: relative;
+}
+
+.passwordField :global(.field-input) {
+  padding-right: 44px;
+}
+
+.toggleBtn {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--r-sm);
+  color: var(--gray-400);
+  transition: var(--t-fast);
+}
+.toggleBtn:hover { color: var(--gray-700); background: var(--gray-100); }
+.toggleBtn:focus-visible { outline: 2px solid var(--teal-500); outline-offset: 1px; }
+
 .error {
   font-size: 13px;
   font-weight: 600;
