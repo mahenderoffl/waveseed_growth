@@ -54,6 +54,16 @@ and isn't compatible with the driver adapter this project uses). If your
 project isn't named `WaveSeed_Growth`, update the variable names in
 `lib/dbUrl.js` to match yours.
 
+**Prisma Postgres note:** on Vercel, `vercel-build` runs
+`prisma migrate deploy` with `PRISMA_SCHEMA_DISABLE_ADVISORY_LOCK=1`. Prisma
+Postgres's connection can be slow to wake from idle, and Prisma's migration
+advisory lock has a fixed, non-configurable 10-second timeout — long enough
+to fail on a cold start (`P1002`). This is an
+[officially supported escape hatch](https://pris.ly/d/migrate-advisory-locking)
+for that exact scenario, and is safe here because Vercel only ever runs one
+production build at a time (the lock exists to stop *concurrent* migrations
+from racing, which can't happen in this setup).
+
 ### 3. Create the database schema
 
 ```bash
