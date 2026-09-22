@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react'
 import { useInView } from '../hooks/useInView'
 import styles from './Testimonials.module.css'
 
+// Shown until at least one real, approved testimonial exists in the
+// database — see api/testimonials.js, which only ever returns rows with
+// approved: true.
 const fallbackProjects = [
   {
     name: 'Trefood',
@@ -33,6 +36,32 @@ const fallbackProjects = [
   },
 ]
 
+function QuoteCard({ t, delay }) {
+  const [ref, inView] = useInView()
+  return (
+    <div
+      ref={ref}
+      className={`${styles.card} reveal ${inView ? 'in-view' : ''}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      <blockquote className={styles.quote}>"{t.quote}"</blockquote>
+      <div className={styles.author}>
+        <div className={styles.avatar} style={{ background: t.color }}>{t.initials}</div>
+        <div>
+          <div className={styles.name}>{t.name}</div>
+          <div className={styles.role}>{t.role}</div>
+        </div>
+      </div>
+      <a href={t.url} target="_blank" rel="noopener noreferrer" className={styles.link}>
+        Visit Site
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+          <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  )
+}
+
 function ProjectCard({ p, delay }) {
   const [ref, inView] = useInView()
   return (
@@ -59,31 +88,35 @@ function ProjectCard({ p, delay }) {
 
 export default function Testimonials() {
   const [ref, inView] = useInView()
-  const [projects, setProjects] = useState(fallbackProjects)
+  const [testimonials, setTestimonials] = useState(null)
 
   useEffect(() => {
     fetch('/api/testimonials')
       .then((res) => (res.ok ? res.json() : null))
-      .then((data) => {
-        if (data?.testimonials?.length) setProjects(data.testimonials)
-      })
-      .catch(() => {}) // keep the fallback content on any failure
+      .then((data) => setTestimonials(data?.testimonials?.length ? data.testimonials : []))
+      .catch(() => setTestimonials([]))
   }, [])
+
+  const items = testimonials?.length ? testimonials : fallbackProjects
+  const isQuotes = Boolean(testimonials?.length)
 
   return (
     <section className={`${styles.section} section`} id="testimonials">
       <div className="container">
         <div ref={ref} className={`${styles.header} reveal ${inView ? 'in-view' : ''}`}>
-          <span className="eyebrow">Real Projects</span>
+          <span className="eyebrow">{isQuotes ? 'Client Voices' : 'Real Projects'}</span>
           <h2 className={styles.title}>
-            Businesses We've<br />
-            <em className={styles.serif}>Helped Get Online</em>
+            {isQuotes ? (
+              <>What Our Clients<br /><em className={styles.serif}>Actually Say</em></>
+            ) : (
+              <>Businesses We've<br /><em className={styles.serif}>Helped Get Online</em></>
+            )}
           </h2>
         </div>
         <div className={styles.grid}>
-          {projects.map((p, i) => (
-            <ProjectCard key={p.id ?? i} p={p} delay={i * 100} />
-          ))}
+          {isQuotes
+            ? items.map((t, i) => <QuoteCard key={t.id ?? i} t={t} delay={i * 100} />)
+            : items.map((p, i) => <ProjectCard key={p.id ?? i} p={p} delay={i * 100} />)}
         </div>
       </div>
     </section>

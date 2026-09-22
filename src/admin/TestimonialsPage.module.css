@@ -36,3 +36,20 @@
   cursor: pointer;
   flex-shrink: 0;
 }
+
+.approvedBadge, .draftBadge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: var(--r-full);
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.approvedBadge {
+  background: var(--teal-50);
+  color: var(--teal-700);
+}
+.draftBadge {
+  background: var(--amber-50, #fffbeb);
+  color: var(--amber-700, #b45309);
+}

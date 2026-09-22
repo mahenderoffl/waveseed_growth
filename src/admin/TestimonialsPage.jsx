@@ -4,7 +4,7 @@ import AdminLayout from './AdminLayout'
 import shared from './AdminShared.module.css'
 import styles from './TestimonialsPage.module.css'
 
-const BLANK = { name: '', description: '', url: '', initials: '', color: '#00a387', order: 0 }
+const BLANK = { name: '', role: '', quote: '', url: '', initials: '', color: '#00a387', approved: false, order: 0 }
 
 export default function TestimonialsPage() {
   const [items, setItems] = useState([])
@@ -67,7 +67,7 @@ export default function TestimonialsPage() {
       title="Testimonials"
       actions={
         editingId === null && (
-          <button className="btn btn-teal" onClick={startNew}>Add Project</button>
+          <button className="btn btn-teal" onClick={startNew}>Add Testimonial</button>
         )
       }
     >
@@ -75,22 +75,22 @@ export default function TestimonialsPage() {
 
       {editingId !== null && (
         <div className={shared.formCard}>
-          <h2 className={shared.formTitle}>{editingId === 'new' ? 'New Project' : 'Edit Project'}</h2>
+          <h2 className={shared.formTitle}>{editingId === 'new' ? 'New Testimonial' : 'Edit Testimonial'}</h2>
           <form onSubmit={handleSubmit}>
             <div className={`${shared.formGrid} ${shared.full}`}>
               <div className={shared.formRow}>
-                <label className="field-label" htmlFor="description">Description</label>
+                <label className="field-label" htmlFor="quote">Quote</label>
                 <textarea
-                  className="field-input" id="description" rows={3} required
-                  placeholder="One honest line about the project — no invented results."
-                  value={form.description}
-                  onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
+                  className="field-input" id="quote" rows={3} required
+                  placeholder="Only what this person actually said — confirm with them before approving."
+                  value={form.quote}
+                  onChange={(e) => setForm((f) => ({ ...f, quote: e.target.value }))}
                 />
               </div>
             </div>
             <div className={shared.formGrid}>
               <div className={shared.formRow}>
-                <label className="field-label" htmlFor="name">Project / Client Name</label>
+                <label className="field-label" htmlFor="name">Name</label>
                 <input
                   className="field-input" id="name" required
                   value={form.name}
@@ -98,7 +98,15 @@ export default function TestimonialsPage() {
                 />
               </div>
               <div className={shared.formRow}>
-                <label className="field-label" htmlFor="url">Live Site URL</label>
+                <label className="field-label" htmlFor="role">Role / Company</label>
+                <input
+                  className="field-input" id="role" required placeholder="Founder, Example Co."
+                  value={form.role}
+                  onChange={(e) => setForm((f) => ({ ...f, role: e.target.value }))}
+                />
+              </div>
+              <div className={shared.formRow}>
+                <label className="field-label" htmlFor="url">Their Site URL</label>
                 <input
                   className="field-input" id="url" type="url" required placeholder="https://example.com"
                   value={form.url}
@@ -106,7 +114,7 @@ export default function TestimonialsPage() {
                 />
               </div>
               <div className={shared.formRow}>
-                <label className="field-label" htmlFor="initials">Badge Initials</label>
+                <label className="field-label" htmlFor="initials">Avatar Initials</label>
                 <input
                   className="field-input" id="initials" required maxLength={3}
                   value={form.initials}
@@ -114,7 +122,7 @@ export default function TestimonialsPage() {
                 />
               </div>
               <div className={shared.formRow}>
-                <label className="field-label" htmlFor="color">Badge Color</label>
+                <label className="field-label" htmlFor="color">Avatar Color</label>
                 <div className={styles.colorInput}>
                   <input
                     className={styles.colorSwatch} id="color" type="color"
@@ -137,6 +145,16 @@ export default function TestimonialsPage() {
                 />
               </div>
             </div>
+            <div className={shared.checkboxRow} style={{ marginBottom: 'var(--space-4)' }}>
+              <input
+                id="approved" type="checkbox"
+                checked={form.approved}
+                onChange={(e) => setForm((f) => ({ ...f, approved: e.target.checked }))}
+              />
+              <label htmlFor="approved">
+                Approved — only check this once {form.name || 'this person'} has confirmed the quote above. Unapproved testimonials never appear on the public site.
+              </label>
+            </div>
             <div className={shared.formActions}>
               <button type="submit" className="btn btn-teal" disabled={saving}>
                 {saving ? 'Saving…' : 'Save'}
@@ -151,16 +169,16 @@ export default function TestimonialsPage() {
 
       <div className={shared.tableWrap}>
         {loading ? (
-          <p className={shared.loadingState}>Loading projects…</p>
+          <p className={shared.loadingState}>Loading testimonials…</p>
         ) : items.length === 0 ? (
-          <p className={shared.emptyState}>No projects yet. The site is showing its built-in defaults until you add some here.</p>
+          <p className={shared.emptyState}>No testimonials yet. The site is showing its built-in defaults until you add some here.</p>
         ) : (
           <table className={shared.table}>
             <thead>
               <tr>
-                <th>Project</th>
-                <th>Description</th>
-                <th>URL</th>
+                <th>Author</th>
+                <th>Quote</th>
+                <th>Status</th>
                 <th>Order</th>
                 <th></th>
               </tr>
@@ -171,11 +189,18 @@ export default function TestimonialsPage() {
                   <td>
                     <div className={styles.avatarCell}>
                       <div className={styles.avatar} style={{ background: t.color }}>{t.initials}</div>
-                      <div style={{ fontWeight: 700, color: 'var(--gray-900)' }}>{t.name}</div>
+                      <div>
+                        <div style={{ fontWeight: 700, color: 'var(--gray-900)' }}>{t.name}</div>
+                        <div style={{ fontSize: 12, color: 'var(--gray-500)' }}>{t.role}</div>
+                      </div>
                     </div>
                   </td>
-                  <td className={styles.quoteCell}>{t.description}</td>
-                  <td><a href={t.url} target="_blank" rel="noopener noreferrer">{t.url}</a></td>
+                  <td className={styles.quoteCell}>{t.quote}</td>
+                  <td>
+                    {t.approved
+                      ? <span className={styles.approvedBadge}>Live</span>
+                      : <span className={styles.draftBadge}>Draft — not shown publicly</span>}
+                  </td>
                   <td>{t.order}</td>
                   <td>
                     <div className={shared.rowActions}>

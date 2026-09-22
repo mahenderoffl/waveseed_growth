@@ -7,7 +7,10 @@ export default async function handler(req, res) {
   }
 
   try {
-    const testimonials = await prisma.testimonial.findMany({ orderBy: { order: 'asc' } })
+    const testimonials = await prisma.testimonial.findMany({
+      where: { approved: true },
+      orderBy: { order: 'asc' },
+    })
     return res.status(200).json({ testimonials })
   } catch (err) {
     console.error('Failed to load testimonials, serving empty list', err)
