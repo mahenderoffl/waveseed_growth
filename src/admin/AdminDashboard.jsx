@@ -91,7 +91,7 @@ export default function AdminDashboard() {
             <input
               className="field-input"
               type="search"
-              placeholder="Search name, email, company…"
+              placeholder="Search name, email, phone, company…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -111,6 +111,7 @@ export default function AdminDashboard() {
                 <tr>
                   <th>Name</th>
                   <th>Email</th>
+                  <th>Phone</th>
                   <th>Company</th>
                   <th>Interested In</th>
                   <th>Message</th>
@@ -124,6 +125,9 @@ export default function AdminDashboard() {
                     <td className={styles.nameCell}>{lead.name}</td>
                     <td className={styles.emailCell}>
                       <a href={`mailto:${lead.email}`}>{lead.email}</a>
+                    </td>
+                    <td className={styles.phoneCell}>
+                      {lead.phone ? <a href={`tel:${lead.phone}`}>{lead.phone}</a> : '—'}
                     </td>
                     <td>{lead.company || '—'}</td>
                     <td>

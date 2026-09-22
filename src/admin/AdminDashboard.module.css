@@ -120,6 +120,7 @@
 
 .nameCell { font-weight: 700; color: var(--gray-900); }
 .emailCell { color: var(--teal-700); }
+.phoneCell { color: var(--teal-700); white-space: nowrap; }
 .messageCell {
   max-width: 320px;
   color: var(--gray-600);
