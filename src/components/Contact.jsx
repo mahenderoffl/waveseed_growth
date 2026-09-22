@@ -31,6 +31,10 @@ export default function Contact() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       })
+      if (res.status === 429) {
+        setError('Too many submissions from this network. Please try again in a few minutes.')
+        return
+      }
       if (!res.ok) throw new Error('Request failed')
       setSent(true)
     } catch {
@@ -89,6 +93,11 @@ export default function Contact() {
           <div className={styles.formWrap}>
             {!sent ? (
               <form className={styles.form} onSubmit={handleSubmit} noValidate>
+                {/* Honeypot — hidden from real visitors, bots that auto-fill every field trip it */}
+                <div className={styles.honeypot} aria-hidden="true">
+                  <label htmlFor="cw">Website</label>
+                  <input id="cw" name="website" type="text" tabIndex={-1} autoComplete="off" />
+                </div>
                 <div className={styles.row}>
                   <div>
                     <label className="field-label" htmlFor="cn">Full Name</label>
