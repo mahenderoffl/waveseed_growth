@@ -18,7 +18,9 @@ export default function AdminLogin() {
       await login(password)
       navigate('/admin', { replace: true })
     } catch (err) {
-      setError(err.message === 'Invalid password' ? 'Incorrect password.' : 'Something went wrong. Try again.')
+      if (err.message === 'Invalid password') setError('Incorrect password.')
+      else if (err.message.includes('Too many attempts')) setError(err.message)
+      else setError('Something went wrong. Try again.')
     } finally {
       setLoading(false)
     }

@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
+import NotFound from './pages/NotFound'
 import AdminLogin from './admin/AdminLogin'
 import LeadsPage from './admin/LeadsPage'
 import TestimonialsPage from './admin/TestimonialsPage'
@@ -16,6 +17,7 @@ export default function App() {
       <Route path="/admin/testimonials" element={<RequireAdmin><TestimonialsPage /></RequireAdmin>} />
       <Route path="/admin/case-studies" element={<RequireAdmin><CaseStudiesPage /></RequireAdmin>} />
       <Route path="/admin/settings" element={<RequireAdmin><SettingsPage /></RequireAdmin>} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   )
 }
