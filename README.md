@@ -52,6 +52,14 @@ npm run prisma:migrate
 This applies `prisma/schema.prisma` (currently a single `ContactSubmission`
 model) to your database and regenerates the Prisma Client.
 
+**On Vercel, this step happens automatically.** The build runs
+`prisma migrate deploy` (via the `vercel-build` script in `package.json`)
+against whatever `DATABASE_URL` is set in the project's environment
+variables, before every deploy — so a schema change just needs a push, not
+a manual command. If `DATABASE_URL` is missing or unreachable, the build
+itself fails with the real error in **Vercel → Deployments → (the
+deployment) → Build Logs**, which is the fastest way to see what's wrong.
+
 ### 4. Run locally
 
 Vite's dev server (`npm run dev`) does not execute the `/api` serverless
