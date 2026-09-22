@@ -1,16 +1,18 @@
-import { prisma } from '../../../lib/prisma.js'
-import { requireAdmin } from '../../../lib/adminAuth.js'
-import { LEAD_STATUSES } from '../../../lib/constants.js'
+import { prisma } from '../../lib/prisma.js'
+import { requireAdmin } from '../../lib/adminAuth.js'
+import { LEAD_STATUSES } from '../../lib/constants.js'
 
-// Combines the leads list (GET, with q/status filters) and single-lead
-// PATCH/DELETE into one function via an optional catch-all segment —
-// Vercel's Hobby plan caps a deployment at 12 Serverless Functions.
-// /api/admin/leads and /api/admin/leads/:id both route here unchanged.
+// Handles the leads list (GET, with q/status filters) and single-lead
+// PATCH/DELETE (via ?id=) in one function. Vercel's Hobby plan caps a
+// deployment at 12 Serverless Functions, and — unlike Next.js — its
+// generic (non-Next.js) file router does not support optional catch-all
+// routes ([[...id]].js), so the id travels as a query param instead of a
+// path segment: that's the only way to keep list and item operations on
+// one static route file without relying on an unsupported convention.
 export default async function handler(req, res) {
   if (!requireAdmin(req, res)) return
 
-  const idParam = req.query.id
-  const id = Array.isArray(idParam) ? idParam[0] : idParam
+  const id = typeof req.query.id === 'string' ? req.query.id : undefined
 
   if (!id) {
     if (req.method !== 'GET') {
