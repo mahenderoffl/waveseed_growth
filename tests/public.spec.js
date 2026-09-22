@@ -24,6 +24,20 @@ test('robots.txt and sitemap.xml are served', async ({ request }) => {
   expect(sitemap.ok()).toBeTruthy()
 })
 
+test('privacy policy and terms pages render and are linked from the footer', async ({ page }) => {
+  await page.goto('/')
+  await page.getByRole('link', { name: 'Privacy Policy' }).click()
+  await expect(page).toHaveURL('/privacy')
+  await expect(page.getByRole('heading', { name: 'Privacy Policy' })).toBeVisible()
+
+  await page.getByRole('link', { name: '← Back to Home' }).click()
+  await expect(page).toHaveURL('/')
+
+  await page.getByRole('link', { name: 'Terms of Service' }).click()
+  await expect(page).toHaveURL('/terms')
+  await expect(page.getByRole('heading', { name: 'Terms of Service' })).toBeVisible()
+})
+
 test('contact form rejects submission with missing required fields', async ({ page }) => {
   await page.goto('/#contact')
   await page.fill('#cn', 'Missing Phone')

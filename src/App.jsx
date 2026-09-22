@@ -1,5 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
+import PrivacyPolicy from './pages/PrivacyPolicy'
+import TermsOfService from './pages/TermsOfService'
 import NotFound from './pages/NotFound'
 import AdminLogin from './admin/AdminLogin'
 import LeadsPage from './admin/LeadsPage'
@@ -12,6 +14,8 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/privacy" element={<PrivacyPolicy />} />
+      <Route path="/terms" element={<TermsOfService />} />
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/admin" element={<RequireAdmin><LeadsPage /></RequireAdmin>} />
       <Route path="/admin/testimonials" element={<RequireAdmin><TestimonialsPage /></RequireAdmin>} />
