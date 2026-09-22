@@ -69,3 +69,34 @@ npm run prisma:studio
 ```
 
 Opens Prisma Studio, a GUI for browsing/editing the database.
+
+## Admin Dashboard
+
+Leads (contact form submissions) can be viewed, searched, and deleted at
+`/admin` — a password-protected page backed by the same database.
+
+### Setup
+
+Set two more variables in `.env` (and in your Vercel project's environment
+variables for production):
+
+```bash
+ADMIN_PASSWORD="pick-a-strong-password"
+ADMIN_JWT_SECRET="$(openssl rand -hex 32)"
+```
+
+- `ADMIN_PASSWORD` is what you type in at `/admin/login`.
+- `ADMIN_JWT_SECRET` signs the login session cookie — use a long random
+  value, and never commit it.
+
+### Using it
+
+- Visit `/admin/login`, sign in, and you'll land on `/admin` with a
+  searchable, sortable table of leads.
+- Sessions last 7 days (an httpOnly cookie) or until you click **Log Out**.
+- The route isn't linked from the site's nav — treat the URL as
+  semi-private, and rotate `ADMIN_PASSWORD`/`ADMIN_JWT_SECRET` if you
+  suspect either has leaked.
+- Like the contact form's `/api` route, this needs `npx vercel dev` (not
+  `npm run dev`) to test locally, since it's backed by serverless
+  functions.
