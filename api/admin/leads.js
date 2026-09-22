@@ -11,19 +11,23 @@ export default async function handler(req, res) {
 
   const q = typeof req.query.q === 'string' ? req.query.q.trim() : ''
 
-  const leads = await prisma.contactSubmission.findMany({
-    where: q
-      ? {
-          OR: [
-            { name: { contains: q, mode: 'insensitive' } },
-            { email: { contains: q, mode: 'insensitive' } },
-            { company: { contains: q, mode: 'insensitive' } },
-          ],
-        }
-      : undefined,
-    orderBy: { createdAt: 'desc' },
-    take: 500,
-  })
-
-  return res.status(200).json({ leads })
+  try {
+    const leads = await prisma.contactSubmission.findMany({
+      where: q
+        ? {
+            OR: [
+              { name: { contains: q, mode: 'insensitive' } },
+              { email: { contains: q, mode: 'insensitive' } },
+              { company: { contains: q, mode: 'insensitive' } },
+            ],
+          }
+        : undefined,
+      orderBy: { createdAt: 'desc' },
+      take: 500,
+    })
+    return res.status(200).json({ leads })
+  } catch (err) {
+    console.error('Failed to load leads', err)
+    return res.status(500).json({ error: 'Something went wrong' })
+  }
 }
