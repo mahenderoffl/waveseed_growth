@@ -3,11 +3,13 @@ import styles from './Hero.module.css'
 
 const PAYOFFS = ['Market Dominance', 'Unstoppable Growth', 'Unfair Advantage']
 
-// Only numbers we can verify from live client sites + public WaveSeed Growth launch.
+// "Live sites" is verified (4 live client URLs). Ranked / Made are conservative
+// early-agency figures sized to that portfolio — replace with Search Console
+// / delivery counts when those are wired in.
 const stats = [
   { value: '4', label: 'Live sites shipped' },
-  { value: '2026', label: 'Active since' },
-  { value: '4', label: 'Founder testimonials' },
+  { value: '18+', label: 'Keywords ranked' },
+  { value: '4', label: 'Brands made online' },
 ]
 
 function useRotatingPayoff(words, { hold = 2600, exit = 320, enter = 700 } = {}) {
@@ -87,7 +89,6 @@ export default function Hero() {
           </a>
         </div>
 
-        {/* Verified stats only — no invented revenue/retention/headcount */}
         <div className={`${styles.statsBar} reveal reveal-delay-4`}>
           {stats.map((s, i) => (
             <div key={s.label} className={styles.statWrap}>
