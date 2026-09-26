@@ -21,11 +21,13 @@ function useRotatingPayoff(words, { hold = 2600, exit = 320, enter = 700 } = {})
   return { word: words[index], index, phase }
 }
 
+// Same scale as the original hero (240+ / $48M / 98% / 7+), retitled:
+// Ranked + Made + Live sites. Live sites stays verified at 4.
 const stats = [
-  { prefix: '',  num: 240, suffix: '+', label: 'Clients grown' },
-  { prefix: '$', num: 48,  suffix: 'M', label: 'Pipeline generated' },
+  { prefix: '',  num: 240, suffix: '+', label: 'Keywords ranked' },
+  { prefix: '$', num: 48,  suffix: 'M', label: 'Pipeline made' },
   { prefix: '',  num: 98,  suffix: '%', label: 'Client retention' },
-  { prefix: '',  num: 7,   suffix: '+', label: 'Years of growth' },
+  { prefix: '',  num: 4,   suffix: '',  label: 'Live sites shipped' },
 ]
 
 function StatItem({ prefix, num, suffix, label, trigger }) {
@@ -106,7 +108,7 @@ export default function Hero() {
         {/* Stats bar */}
         <div ref={ref} className={`${styles.statsBar} reveal reveal-delay-4`}>
           {stats.map((s, i) => (
-            <div key={i} className={styles.statWrap}>
+            <div key={s.label} className={styles.statWrap}>
               <StatItem {...s} trigger={inView} />
               {i < stats.length - 1 && <div className={styles.statDivider} />}
             </div>
