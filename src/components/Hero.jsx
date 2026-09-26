@@ -3,6 +3,13 @@ import styles from './Hero.module.css'
 
 const PAYOFFS = ['Market Dominance', 'Unstoppable Growth', 'Unfair Advantage']
 
+// Only numbers we can verify from live client sites + public WaveSeed Growth launch.
+const stats = [
+  { value: '4', label: 'Live sites shipped' },
+  { value: '2026', label: 'Active since' },
+  { value: '4', label: 'Founder testimonials' },
+]
+
 function useRotatingPayoff(words, { hold = 2600, exit = 320, enter = 700 } = {}) {
   const [index, setIndex] = useState(0)
   const [phase, setPhase] = useState('hold') // 'hold' | 'exit' | 'enter'
@@ -78,6 +85,19 @@ export default function Hero() {
               <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </a>
+        </div>
+
+        {/* Verified stats only — no invented revenue/retention/headcount */}
+        <div className={`${styles.statsBar} reveal reveal-delay-4`}>
+          {stats.map((s, i) => (
+            <div key={s.label} className={styles.statWrap}>
+              <div className={styles.stat}>
+                <div className={styles.statNum}>{s.value}</div>
+                <div className={styles.statLabel}>{s.label}</div>
+              </div>
+              {i < stats.length - 1 && <div className={styles.statDivider} />}
+            </div>
+          ))}
         </div>
       </div>
 
