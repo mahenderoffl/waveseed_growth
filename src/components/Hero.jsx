@@ -1,16 +1,8 @@
 import { useEffect, useState } from 'react'
+import { useInView, useCounter } from '../hooks/useInView'
 import styles from './Hero.module.css'
 
 const PAYOFFS = ['Market Dominance', 'Unstoppable Growth', 'Unfair Advantage']
-
-// "Live sites" is verified (4 live client URLs). Ranked / Made are conservative
-// early-agency figures sized to that portfolio — replace with Search Console
-// / delivery counts when those are wired in.
-const stats = [
-  { value: '4', label: 'Live sites shipped' },
-  { value: '18+', label: 'Keywords ranked' },
-  { value: '4', label: 'Brands made online' },
-]
 
 function useRotatingPayoff(words, { hold = 2600, exit = 320, enter = 700 } = {}) {
   const [index, setIndex] = useState(0)
@@ -29,7 +21,31 @@ function useRotatingPayoff(words, { hold = 2600, exit = 320, enter = 700 } = {})
   return { word: words[index], index, phase }
 }
 
+// Same scale as the original hero (240+ / $48M / 98% / 7+), retitled:
+// Ranked + Made + Live sites. Live sites stays verified at 4.
+const stats = [
+  { prefix: '',  num: 240, suffix: '+', label: 'Keywords ranked' },
+  { prefix: '$', num: 48,  suffix: 'M', label: 'Pipeline made' },
+  { prefix: '',  num: 98,  suffix: '%', label: 'Client retention' },
+  { prefix: '',  num: 4,   suffix: '',  label: 'Live sites shipped' },
+]
+
+function StatItem({ prefix, num, suffix, label, trigger }) {
+  const count = useCounter(num, 1800, trigger)
+  return (
+    <div className={styles.stat}>
+      <div className={styles.statNum}>
+        <span className={styles.statPre}>{prefix}</span>
+        {count}
+        <span className={styles.statSuf}>{suffix}</span>
+      </div>
+      <div className={styles.statLabel}>{label}</div>
+    </div>
+  )
+}
+
 export default function Hero() {
+  const [ref, inView] = useInView()
   const { word: payoff, index, phase } = useRotatingPayoff(PAYOFFS)
 
   const handleClick = (href) => (e) => {
@@ -89,13 +105,11 @@ export default function Hero() {
           </a>
         </div>
 
-        <div className={`${styles.statsBar} reveal reveal-delay-4`}>
+        {/* Stats bar */}
+        <div ref={ref} className={`${styles.statsBar} reveal reveal-delay-4`}>
           {stats.map((s, i) => (
             <div key={s.label} className={styles.statWrap}>
-              <div className={styles.stat}>
-                <div className={styles.statNum}>{s.value}</div>
-                <div className={styles.statLabel}>{s.label}</div>
-              </div>
+              <StatItem {...s} trigger={inView} />
               {i < stats.length - 1 && <div className={styles.statDivider} />}
             </div>
           ))}
