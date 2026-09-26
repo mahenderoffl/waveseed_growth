@@ -28,28 +28,6 @@ export function useInView(options = {}) {
 }
 
 /**
- * useCounter — Animates a number from 0 to target when triggered
- */
-export function useCounter(target, duration = 1800, trigger = true) {
-  const [count, setCount] = useState(0)
-
-  useEffect(() => {
-    if (!trigger) return
-    let start = null
-    const step = (ts) => {
-      if (!start) start = ts
-      const progress = Math.min((ts - start) / duration, 1)
-      const eased = 1 - Math.pow(1 - progress, 3)
-      setCount(Math.round(eased * target))
-      if (progress < 1) requestAnimationFrame(step)
-    }
-    requestAnimationFrame(step)
-  }, [trigger, target, duration])
-
-  return count
-}
-
-/**
  * useScrolled — Returns true after scrolling past threshold
  */
 export function useScrolled(threshold = 20) {

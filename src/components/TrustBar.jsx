@@ -1,9 +1,11 @@
 import styles from './TrustBar.module.css'
 
+// Real clients from shipped projects — no invented brand names or headcounts.
 const clients = [
-  'Nexora', 'Brightloop', 'Stackd', 'VantaPay',
-  'Orbify', 'CoreLift', 'Mednova', 'Prismly',
-  'Stratix', 'Fuelr', 'Capsule', 'Loopwise',
+  'Trefood',
+  'Sai Raja Motor Driving School',
+  'Sai Manju Driving School',
+  'Hanmakonda Water Service',
 ]
 
 export default function TrustBar() {
@@ -12,7 +14,7 @@ export default function TrustBar() {
   return (
     <section className={styles.wrap}>
       <div className="container">
-        <p className={styles.label}>Trusted by 240+ growth-stage brands worldwide</p>
+        <p className={styles.label}>Work we've shipped for real businesses</p>
       </div>
       <div className={styles.track}>
         <div className={styles.inner}>

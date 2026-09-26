@@ -116,7 +116,7 @@
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
-  margin-bottom: 64px;
+  margin-bottom: 0;
 }
 
 /* ── Stats bar ── */

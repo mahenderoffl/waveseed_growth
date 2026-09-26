@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useInView, useCounter } from '../hooks/useInView'
 import styles from './Hero.module.css'
 
 const PAYOFFS = ['Market Dominance', 'Unstoppable Growth', 'Unfair Advantage']
@@ -21,29 +20,7 @@ function useRotatingPayoff(words, { hold = 2600, exit = 320, enter = 700 } = {})
   return { word: words[index], index, phase }
 }
 
-const stats = [
-  { prefix: '',  num: 240, suffix: '+', label: 'Clients grown' },
-  { prefix: '$', num: 48,  suffix: 'M', label: 'Pipeline generated' },
-  { prefix: '',  num: 98,  suffix: '%', label: 'Client retention' },
-  { prefix: '',  num: 7,   suffix: '+', label: 'Years of growth' },
-]
-
-function StatItem({ prefix, num, suffix, label, trigger }) {
-  const count = useCounter(num, 1800, trigger)
-  return (
-    <div className={styles.stat}>
-      <div className={styles.statNum}>
-        <span className={styles.statPre}>{prefix}</span>
-        {count}
-        <span className={styles.statSuf}>{suffix}</span>
-      </div>
-      <div className={styles.statLabel}>{label}</div>
-    </div>
-  )
-}
-
 export default function Hero() {
-  const [ref, inView] = useInView()
   const { word: payoff, index, phase } = useRotatingPayoff(PAYOFFS)
 
   const handleClick = (href) => (e) => {
@@ -101,16 +78,6 @@ export default function Hero() {
               <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </a>
-        </div>
-
-        {/* Stats bar */}
-        <div ref={ref} className={`${styles.statsBar} reveal reveal-delay-4`}>
-          {stats.map((s, i) => (
-            <div key={i} className={styles.statWrap}>
-              <StatItem {...s} trigger={inView} />
-              {i < stats.length - 1 && <div className={styles.statDivider} />}
-            </div>
-          ))}
         </div>
       </div>
 
